@@ -10,7 +10,10 @@ license:
   - MIT
 license_file: "LICENSE.md"
 tags:
-  - IPAM
+  - dcim
+  - ipam
+  - system
+  - networking
 dependencies: {}
 repository: https://github.com/mrlesmithjr/netbox
 documentation: https://github.com/mrlesmithjr/netbox/docs
