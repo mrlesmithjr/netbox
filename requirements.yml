@@ -1,0 +1,9 @@
+---
+collections:
+  - name: netbox.netbox
+
+roles:
+  - name: mrlesmithjr.ansible_bootstrap_python
+  - name: mrlesmithjr.ansible_netbox
+  - name: mrlesmithjr.postgresql
+  - name: mrlesmithjr.redis

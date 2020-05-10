@@ -1,0 +1,4 @@
+venv/
+ansible_collections/netbox
+ansible_collections/ansible
+roles/mrlesmithjr*

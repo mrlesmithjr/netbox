@@ -1,0 +1,183 @@
+---
+netbox_url: http://127.0.0.1:8080
+netbox_token: 0123456789abcdef0123456789abcdef01234567
+
+netbox_ipam_roles:
+  - data:
+      name: Production
+      weight: 1000
+    state: present
+  - data:
+      name: Development
+      weight: 1000
+    state: present
+  - data:
+      name: UAT
+      weight: 1000
+    state: present
+
+netbox_regions:
+  - data:
+      name: US
+    state: present
+  - data:
+      name: East
+      parent_region: US
+    state: present
+  - data:
+      name: North Virginia
+      parent_region: East
+    state: present
+  - data:
+      name: Ohio
+      parent_region: East
+    state: present
+
+netbox_sites:
+  - data:
+      asn: 65001
+      comments: ""
+      contact_email: johndoe@example.org
+      contact_name: John Doe
+      contact_phone: 111-111-1111
+      custom_fields: {}
+      description: ""
+      facility: AT&T
+      name: ATT
+      physical_address: ""
+      region: East
+      shipping_address: ""
+      status: Active
+      tags:
+        - ATT
+        - Customer1
+      tenant: Customer1
+      time_zone: US/Eastern
+    state: present
+  - data:
+      asn: 65002
+      comments: ""
+      contact_email: janedoe@example.org
+      contact_name: Jane Doe
+      contact_phone: 222-222-2222
+      custom_fields: {}
+      description: ""
+      facility: QTS
+      name: QTS
+      physical_address: ""
+      region: East
+      shipping_address: ""
+      status: Retired
+      tags:
+        - QTS
+        - Customer2
+      tenant: Customer2
+      time_zone: US/Eastern
+    state: present
+
+netbox_tenant_groups:
+  - data:
+      name: Acquisitions
+    state: present
+  - data:
+      name: Customers
+    state: present
+
+netbox_tenants:
+  - data:
+      name: Acquisition1
+      tenant_group: Acquisitions
+      description: Acquisition 1 Tenant
+      comments: Acquisition 1 Tenant
+      tags:
+        - Not Monitored
+    state: present
+  - data:
+      name: Customer1
+      tenant_group: Customers
+      description: Customer 1 Tenant
+      comments: Customer 1 Tenant
+      tags:
+        - Monitored
+    state: present
+  - data:
+      name: Customer2
+      tenant_group: Customers
+      description: Customer 2 Tenant
+      comments: Customer 2 Tenant
+      tags:
+        - Monitored
+    state: present
+
+netbox_vlan_groups:
+  - data:
+      name: ATT-VLAN-GROUP
+      site: ATT
+    state: present
+  - data:
+      name: QTS-VLAN-GROUP
+      site: QTS
+    state: present
+  - data:
+      name: TEST-VLAN-GROUP
+    state: present
+
+netbox_vlans:
+  - data:
+      description: ATT VLAN ID 1000
+      name: ATT-VLAN-1000
+      site: ATT
+      status: Active
+      tags:
+        - Monitored
+      tenant: Customer1
+      vid: 1000
+      vlan_group: ATT-VLAN-GROUP
+      vlan_role: Production
+    state: present
+  - data:
+      description: ATT VLAN ID 1001
+      name: ATT-VLAN-1001
+      site: ATT
+      status: Active
+      tags:
+        - Monitored
+      tenant: Customer2
+      vid: 1001
+      vlan_group: ATT-VLAN-GROUP
+      vlan_role: UAT
+    state: present
+  - data:
+      description: QTS VLAN ID 1000
+      name: QTS-VLAN-1000
+      site: QTS
+      status: Reserved
+      tags:
+        - Not Monitored
+      tenant: Acquisition1
+      vid: 1000
+      vlan_group: QTS-VLAN-GROUP
+      vlan_role: Development
+    state: absent
+
+netbox_vrfs:
+  - data:
+      custom_fields: {}
+      description: Customer1 VRF
+      enforce_unique: true
+      name: Customer1 VRF
+      rd: Customer1-rd
+      tags:
+        - Customer1
+      tenant: Customer1
+    state: present
+  - data:
+      custom_fields: {}
+      description: Customer2 VRF
+      enforce_unique: true
+      name: Customer2 VRF
+      rd: Customer2-rd
+      tags:
+        - Customer2
+      tenant: Customer2
+    state: present

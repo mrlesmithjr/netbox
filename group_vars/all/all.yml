@@ -1,0 +1,10 @@
+---
+postgresql_dbs:
+  - name: netbox
+    state: present
+postgresql_users:
+  - name: netbox
+    db: netbox
+    password: netbox
+    state: present
+pri_domain_name: test.vagrant.local

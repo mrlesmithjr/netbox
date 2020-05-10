@@ -1,0 +1,18 @@
+---
+namespace: mrlesmithjr
+name: netbox
+version: 1.0.0
+readme: README.md
+authors:
+  - Larry Smith Jr. <mrlesmithjr@gmail.com>
+description: Ansible collection for installing/configuring/managing NetBox
+license:
+  - MIT
+license_file: "LICENSE.md"
+tags:
+  - IPAM
+dependencies: {}
+repository: https://github.com/mrlesmithjr/netbox
+documentation: https://github.com/mrlesmithjr/netbox/docs
+homepage: https://github.com/mrlesmithjr/netbox
+issues: https://github.com/mrlesmithjr/netbox/issues
