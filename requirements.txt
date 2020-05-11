@@ -1,5 +1,6 @@
 ansible==2.9.7
 ansible-lint==4.2.0
+docker==4.2.0
 mkdocs==1.1
 molecule==3.0.4
 pynetbox==4.3.1

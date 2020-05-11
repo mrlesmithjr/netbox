@@ -1,0 +1,104 @@
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  collections:
+    - netbox.netbox
+  tasks:
+    - name: Manage NetBox IPAM Roles
+      netbox_ipam_role:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_ipam_roles }}"
+
+    - name: Manage NetBox Region Parents
+      netbox_region:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data:
+          name: "{{ item.data.parent_region }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_regions }}"
+      when: item.data.parent_region is defined
+
+    - name: Manage NetBox Regions
+      netbox_region:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_regions }}"
+
+    - name: Manage NetBox Tenant Groups
+      netbox_tenant_group:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_tenant_groups }}"
+
+    - name: Manage NetBox Tenants
+      netbox_tenant:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_tenants }}"
+
+    - name: Manage NetBox Sites
+      netbox_site:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_sites }}"
+
+    - name: Manage NetBox RIRs
+      netbox_rir:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_rirs }}"
+
+    - name: Manage NetBox Aggregates
+      netbox_aggregate:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_aggregates }}"
+
+    - name: Manage NetBox VRFs
+      netbox_vrf:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_vrfs }}"
+
+    - name: Manage NetBox VLAN Groups
+      netbox_vlan_group:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_vlan_groups }}"
+
+    - name: Manage NetBox VLANs
+      netbox_vlan:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_vlans }}"
+
+    - name: Manage NetBox Prefixes
+      netbox_prefix:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+        first_available: "{{ item.first_available|default(omit) }}"
+      loop: "{{ netbox_prefixes }}"

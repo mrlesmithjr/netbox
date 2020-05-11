@@ -2,6 +2,24 @@
 netbox_url: http://127.0.0.1:8080
 netbox_token: 0123456789abcdef0123456789abcdef01234567
 
+netbox_aggregates:
+  - data:
+      prefix: 10.0.0.0/8
+      rir: RFC 1918
+    state: present
+  - data:
+      prefix: 100.64.0.0/10
+      rir: RFC 6598
+    state: present
+  - data:
+      prefix: 172.16.0.0/12
+      rir: RFC 1918
+    state: present
+  - data:
+      prefix: 192.168.0.0/16
+      rir: RFC 1918
+    state: present
+
 netbox_ipam_roles:
   - data:
       name: Production
@@ -14,6 +32,27 @@ netbox_ipam_roles:
   - data:
       name: UAT
       weight: 1000
+    state: present
+
+netbox_prefixes:
+  - data:
+      family: 4
+      prefix: 10.156.32.0/19
+      site: ATT
+      vrf: Customer1 VRF
+      tenant: Customer1
+      vlan:
+        name: ATT-VLAN-1000
+        site: ATT
+        tenant: Customer1
+        vlan_group: ATT-VLAN-GROUP
+      status: Reserved
+      prefix_role: Production
+      description: ""
+      is_pool: true
+      tags:
+        - ATT
+        - Customer1
     state: present
 
 netbox_regions:
@@ -31,6 +70,14 @@ netbox_regions:
   - data:
       name: Ohio
       parent_region: East
+    state: present
+
+netbox_rirs:
+  - data:
+      name: RFC 1918
+    state: present
+  - data:
+      name: RFC 6598
     state: present
 
 netbox_sites:
