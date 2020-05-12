@@ -12,16 +12,6 @@
         state: "{{ item.state|default(omit) }}"
       loop: "{{ netbox_ipam_roles }}"
 
-    - name: Manage NetBox Region Parents
-      netbox_region:
-        netbox_url: "{{ netbox_url }}"
-        netbox_token: "{{ netbox_token }}"
-        data:
-          name: "{{ item.data.parent_region }}"
-        state: "{{ item.state|default(omit) }}"
-      loop: "{{ netbox_regions }}"
-      when: item.data.parent_region is defined
-
     - name: Manage NetBox Regions
       netbox_region:
         netbox_url: "{{ netbox_url }}"
@@ -53,6 +43,46 @@
         data: "{{ item.data }}"
         state: "{{ item.state|default(omit) }}"
       loop: "{{ netbox_sites }}"
+
+    - name: Manage NetBox Rack Groups
+      netbox_rack_group:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_rack_groups }}"
+
+    - name: Manage NetBox Rack Roles
+      netbox_rack_role:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_rack_roles }}"
+
+    - name: Manage NetBox Racks
+      netbox_rack:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_racks }}"
+
+    - name: Manage NetBox Manufacturers
+      netbox_manufacturer:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_manufacturers }}"
+
+    - name: Manage NetBox Platforms
+      netbox_platform:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_platforms }}"
 
     - name: Manage NetBox RIRs
       netbox_rir:
@@ -102,3 +132,83 @@
         state: "{{ item.state|default(omit) }}"
         first_available: "{{ item.first_available|default(omit) }}"
       loop: "{{ netbox_prefixes }}"
+
+    - name: Manage NetBox Device Types
+      netbox_device_type:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_device_types }}"
+
+    - name: Manage NetBox Device Roles
+      netbox_device_role:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_device_roles }}"
+
+    - name: Manage NetBox Cluster Groups
+      netbox_cluster_group:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_cluster_groups }}"
+
+    - name: Manage NetBox Cluster Types
+      netbox_cluster_type:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_cluster_types }}"
+
+    - name: Manage NetBox Clusters
+      netbox_cluster:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_clusters }}"
+
+    - name: Manage NetBox Devices
+      netbox_device:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_devices }}"
+
+    - name: Manage NetBox Virtual Machines
+      netbox_virtual_machine:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_virtual_machines }}"
+
+    - name: Manage NetBox Interfaces
+      netbox_device_interface:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_device_interfaces }}"
+
+    - name: Manage NetBox Virtual Interfaces
+      netbox_vm_interface:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_virtual_interfaces }}"
+
+    - name: Manage NetBox IP Addresses
+      netbox_ip_address:
+        netbox_url: "{{ netbox_url }}"
+        netbox_token: "{{ netbox_token }}"
+        data: "{{ item.data }}"
+        state: "{{ item.state|default(omit) }}"
+      loop: "{{ netbox_ip_addresses }}"
