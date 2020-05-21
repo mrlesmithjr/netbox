@@ -1,13 +1,15 @@
 ---
 namespace: mrlesmithjr
 name: netbox
-version: 1.0.0
+version: 1.0.1
+# build_ignore:
+#   - venv/
+#   - group_vars/
+#   - "*.tar.gz"
 readme: README.md
 authors:
   - Larry Smith Jr. <mrlesmithjr@gmail.com>
 description: Ansible collection for installing/configuring/managing NetBox
-license:
-  - MIT
 license_file: "LICENSE.md"
 tags:
   - dcim
