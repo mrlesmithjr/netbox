@@ -51,8 +51,9 @@ def main():
     netbox_ingest = NetBoxIngest(netbox)
     netbox_data = netbox_ingest.data()
 
-    netbox_ansible = NetBoxToAnsible(netbox_data)
-    netbox_ansible_data = netbox_ansible.data()
+    if args.output == 'ansible':
+        netbox_ansible = NetBoxToAnsible(netbox_data)
+        netbox_ansible_data = netbox_ansible.data()
 
     if args.format == 'json':
         if args.output == 'netbox':

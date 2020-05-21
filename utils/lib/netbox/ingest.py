@@ -1,3 +1,6 @@
+"""lib/netbox/ingest.py"""
+
+
 class NetBoxIngest:
     """Main NetBox ingestion class"""
 
@@ -37,6 +40,9 @@ class NetBoxIngest:
         self.device_roles()
         self.devices()
         self.interfaces()
+        self.cables()
+        self.console_connections()
+        self.inventory_items()
 
     def tenancy_collections(self):
         """Collect tenancy related info"""
@@ -190,6 +196,37 @@ class NetBoxIngest:
             netbox_device_interfaces.append(interface_info)
 
         self.netbox_data['netbox_device_interfaces'] = netbox_device_interfaces
+
+    def cables(self):
+        """Returns all NetBox cables"""
+        netbox_cables = []
+        all_cables = self.netbox.dcim.cables.all()
+        for cable in all_cables:
+            cable_info = {'data': dict(cable), 'state': 'present'}
+            netbox_cables.append(cable_info)
+
+        self.netbox_data['netbox_cables'] = netbox_cables
+
+    def console_connections(self):
+        """Returns all NetBox console connections"""
+        netbox_console_connections = []
+        all_console_connections = self.netbox.dcim.console_connections.all()
+        for connection in all_console_connections:
+            connection_info = {'data': dict(connection), 'state': 'present'}
+            netbox_console_connections.append(connection_info)
+
+        self.netbox_data[
+            'netbox_console_connections'] = netbox_console_connections
+
+    def inventory_items(self):
+        """Returns all NetBox inventory items"""
+        netbox_inventory_items = []
+        all_inventory_items = self.netbox.dcim.inventory_items.all()
+        for item in all_inventory_items:
+            item_info = {'data': dict(item), 'state': 'present'}
+            netbox_inventory_items.append(item_info)
+
+        self.netbox_data['netbox_inventory_items'] = netbox_inventory_items
 
     def tenant_groups(self):
         """Returns all NetBox tenant groups"""

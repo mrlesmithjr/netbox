@@ -1,3 +1,6 @@
+"""lib/netbox/ansible.py"""
+
+
 class NetBoxToAnsible:
     """Main NetBox to Ansible class"""
 
@@ -37,6 +40,7 @@ class NetBoxToAnsible:
         self.device_roles()
         self.devices()
         self.interfaces()
+        self.inventory_items()
 
     def tenancy_translations(self):
         """Translate tenancy related info"""
@@ -535,15 +539,22 @@ class NetBoxToAnsible:
         netbox_device_interfaces = []
         for interface in self.netbox_data['netbox_device_interfaces']:
             data = interface['data']
-            if data['form_factor'] is not None:
-                data['form_factor'] = data['form_factor']['label']
+
+            # This is related to https://github.com/netbox-community/ansible_modules/issues/193
+            form_factor = data.get('form_factor')
+            int_type = data.get('type')
+            if int_type is not None:
+                data['type'] = data['type']['label']
+            elif form_factor is not None:
+                data['type'] = data['form_factor']['label']
+
             if data['mode'] is not None:
                 data['mode'] = data['mode']['label']
             interface_info = {'data': {
                 'description': data['description'],
                 'device': data['device']['name'],
                 'enabled': data['enabled'],
-                'form_factor': data['form_factor'],
+                'type': data['type'],
                 'lag': data['lag'],
                 'mac_address': data['mac_address'],
                 'mgmt_only': data['mgmt_only'],
@@ -558,6 +569,27 @@ class NetBoxToAnsible:
 
         self.ansible_data[
             'netbox_device_interfaces'] = netbox_device_interfaces
+
+    def inventory_items(self):
+        """Extract NetBox inventory items"""
+        netbox_inventory_items = []
+        for item in self.netbox_data['netbox_inventory_items']:
+            data = item['data']
+            if data['manufacturer'] is not None:
+                data['manufacturer'] = data['manufacturer']['name']
+            item_info = {
+                'data': {'device': data['device']['name'],
+                         'name': data['name'],
+                         'part_id': data['part_id'],
+                         'manufacturer': data['manufacturer'],
+                         'serial': data['serial'],
+                         'asset_tag': data['asset_tag'],
+                         'description': data['description'],
+                         'tags': data['tags']
+                         }, 'state': item['state']}
+            netbox_inventory_items.append(item_info)
+
+        self.ansible_data['netbox_inventory_items'] = netbox_inventory_items
 
     def cluster_groups(self):
         """Extract NetBox cluster groups"""
